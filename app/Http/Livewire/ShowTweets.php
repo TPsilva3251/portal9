@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\like;
 use App\Models\Tweet;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -10,7 +11,8 @@ class ShowTweets extends Component
 {
     use WithPagination;
 
-    public $content = 'Deu certo!';
+    public $content = '';
+    
 
     protected $rules = [
         'content' => 'required|min:3|max:255',
@@ -18,11 +20,16 @@ class ShowTweets extends Component
 
     public function render()
     {
-        $tweets = Tweet::with('user')->latest()->paginate(10);
-        // dd($tweets);
+
+        $tweets = Tweet::with('user')->latest()->paginate(4);       
+        // $quants = like::select('tweet_id', like::raw('count(*) as total'))
+        //          ->groupBy('tweet_id')
+        //          ->get();
+                //  dd($quants);
         return view('livewire.show-tweets', [
             'tweets' => $tweets,
         ]);
+
     }
 
     public function create()
@@ -46,7 +53,7 @@ class ShowTweets extends Component
         $tweet = Tweet::find($idTweet);
 
         $tweet->likes()->create([
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
         ]);
     }
 
@@ -54,4 +61,6 @@ class ShowTweets extends Component
     {
         $tweet->likes()->delete();
     }
+
+   
 }
