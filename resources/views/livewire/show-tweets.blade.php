@@ -10,7 +10,7 @@
             {{ $message }}
         @enderror
         <br><br>
-        <button type="submit">Criar Tweet</button>
+        <button type="submit" style="background-color: #008000">Criar Tweet</button>
     </form>
     <hr>
     @foreach ($tweets as $tweet)
