@@ -1,16 +1,19 @@
 <div>
-    ShowTweets
-    <br><br>
-    {{ $content }}
-    <br><br>
+    <div class="primary" style="background-color: #87ceeb; text-align: center">
+        <h2>Visualizar seus Tweets</h2>
+    </div>
     <form method="post" wire:submit.prevent='create'>
-        <input type="text" name="content" id="content" wire:model='content'>
+        {{-- <input type="text" class="form-control" name="content" id="content" wire:model='content'> --}}
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Digite aqui seu Tweet" name="content" id="content"
+                wire:model='content'>
+            <span class="input-group-text" id="basic-addon2"><button type="submit" class="btn btn-success">Criar
+                    Tweet</button></span>
+        </div>
         @error('content')
             <br><br>
             {{ $message }}
         @enderror
-        <br><br>
-        <button type="submit" style="background-color: #008000">Criar Tweet</button>
     </form>
     <hr>
     @foreach ($tweets as $tweet)
@@ -26,18 +29,33 @@
                 {{ $tweet->user->name }}
             </div>
             <div class="w6/8">
-                {{ $tweet->content }}
-                @if ($tweet->likes->count())
-                    <a href="#" wire:click.prevent='unlike({{ $tweet->id }})'>Descurtir</a>
-                @else
-                    <a href="#" wire:click.prevent='like({{ $tweet->id }})'>Curtir</a>
-                @endif
+                <div>
+                    <div class="container" style="padding-inline-start: 5em">
+                        {{ $tweet->content }}
+                    </div>
+
+                    @if ($tweet->likes->count())
+                        <div class="container" style="padding-inline-start: 85vw">
+                            <a href="#" wire:click.prevent='unlike({{ $tweet->id }})'
+                                style="text-decoration: none; color: #ff0000">Descurtir</a>
+                        </div>
+                    @else
+                        <div class="container" style="padding-inline-start: 85vw">
+                            <a href="#" wire:click.prevent='like({{ $tweet->id }})'
+                                style="text-decoration: none; color: #038000">Curtir</a>
+                        </div>
+                    @endif
+                </div>
                 <br>
             </div>
         </div>
+        <hr>
     @endforeach
-    <hr>
     <div>
         {{ $tweets->links() }}
+    </div>
+    <div>
+        <button wire:click.prevent='contador'>teste</button>
+
     </div>
 </div>

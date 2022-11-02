@@ -25,4 +25,10 @@ class Tweet extends Model
                 }
             });
     }
+
+    public function contador()
+   {
+        $total = like::distinct('tweet_id')->count();
+        // return $total;
+   }
 }
