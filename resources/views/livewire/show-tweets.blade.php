@@ -14,21 +14,27 @@
     </form>
     <hr>
     @foreach ($tweets as $tweet)
-        @if ($tweet->user->photo)
-            {{-- <img src="{{ url("storage/{$tweet->user->photo}") }}" alt="{{ $tweet->user->name }}"> --}}
-            <img src="{{ url('storage/user/thiago.jpg') }}" alt="{{ $tweet->user->name }}">
-            <p>1</p>
-        @else
-            <img src="{{ url('imgs/noimage.png') }}" alt="{{ $tweet->user->name }}">
-            <p>2</p>
-        @endif
-        {{ $tweet->user->name }} - {{ $tweet->content }}
-        @if ($tweet->likes->count())
-            <a href="#" wire:click.prevent='unlike({{ $tweet->id }})'>Descurtir</a>
-        @else
-            <a href="#" wire:click.prevent='like({{ $tweet->id }})'>Curtir</a>
-        @endif
-        <br>
+        <div class="flex">
+            <div class="w2/8">
+                @if ($tweet->user->photo)
+                    <img src="{{ url("storage/{$tweet->user->photo}") }}" alt="{{ $tweet->user->name }}"
+                        class="rounded-full h-12 w-12">
+                @else
+                    <img src="{{ url('imgs/noimage.png') }}" alt="{{ $tweet->user->name }}"
+                        class="rounded-full h-12 w-12">
+                @endif
+                {{ $tweet->user->name }}
+            </div>
+            <div class="w6/8">
+                {{ $tweet->content }}
+                @if ($tweet->likes->count())
+                    <a href="#" wire:click.prevent='unlike({{ $tweet->id }})'>Descurtir</a>
+                @else
+                    <a href="#" wire:click.prevent='like({{ $tweet->id }})'>Curtir</a>
+                @endif
+                <br>
+            </div>
+        </div>
     @endforeach
     <hr>
     <div>
